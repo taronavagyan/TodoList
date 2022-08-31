@@ -52,6 +52,25 @@ class TodoList {
   size() {
     return this.todos.length;
   }
+
+  first() {
+    return this.todos[0];
+  }
+
+  last() {
+    return this.todos[this.size() - 1];
+  }
+
+  itemAt(index) {
+    this._validateIndex(index);
+    return this.todos[index];
+  }
+
+  _validateIndex(index) {
+    if (!(index in this.todos)) {
+      throw new ReferenceError(`invalid index: ${index}`);
+    }
+  }
 }
 
 let list = new TodoList("Today's Todos");
@@ -65,4 +84,5 @@ list.add(todo1);
 list.add(todo2);
 list.add(todo3);
 list.add(todo4);
-console.log(list.size());
+
+console.log(list.itemAt(55));
