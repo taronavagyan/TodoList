@@ -11,11 +11,6 @@ class Todo {
     this.done = false;
   }
 
-  toString() {
-    let marker = this.isDone() ? Todo.DONE_MARKER : Todo.UNDONE_MARKER;
-    return `[${marker}] ${this.title}`;
-  }
-
   markDone() {
     this.done = true;
   }
@@ -26,6 +21,11 @@ class Todo {
 
   isDone() {
     return this.done;
+  }
+
+  toString() {
+    let marker = this.isDone() ? Todo.DONE_MARKER : Todo.UNDONE_MARKER;
+    return `[${marker}] ${this.title}`;
   }
 
   getTitle() {
@@ -92,6 +92,13 @@ class TodoList {
     return this.todos.splice(index, 1);
   }
 
+  toString() {
+    return (
+      `---- ${this.title} ----` +
+      this.todos.reduce((list, todo) => `${list} ${todo.toString()} \n`, "\n")
+    );
+  }
+
   forEach(callback) {
     this.todos.forEach(callback);
   }
@@ -107,11 +114,15 @@ class TodoList {
     return filteredTodoList;
   }
 
-  toString() {
-    return (
-      `---- ${this.title} ----` +
-      this.todos.reduce((list, todo) => `${list} ${todo.toString()} \n`, "\n")
-    );
+  findByTitle(title) {
+    let found = undefined;
+    this.forEach((todo) => {
+      if (todo.title === title) {
+        found = todo;
+      }
+    });
+
+    return found;
   }
 
   _validateIndex(index) {
@@ -138,4 +149,4 @@ list.add(todo6);
 todo1.markDone();
 todo5.markDone();
 
-console.log(list.filter((todo) => todo.isDone()).first());
+console.log(list.findByTitle("Buy a"));
