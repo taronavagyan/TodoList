@@ -133,6 +133,22 @@ class TodoList {
     return this.filter((todo) => !todo.isDone());
   }
 
+  markDone(title) {
+    this.findByTitle(title).markDone();
+  }
+
+  markAllDone() {
+    this.forEach((todo) => todo.markDone());
+  }
+
+  markAllUndone() {
+    this.forEach((todo) => todo.markUndone());
+  }
+
+  toArray() {
+    return this.todos.slice();
+  }
+
   _validateIndex(index) {
     if (!(index in this.todos)) {
       throw new ReferenceError(`invalid index: ${index}`);
@@ -157,5 +173,4 @@ list.add(todo6);
 todo1.markDone();
 todo5.markDone();
 
-console.log(list.allDone());
-console.log(list.allNotDone());
+console.log(list.toArray() === list.todos);
