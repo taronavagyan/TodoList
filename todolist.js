@@ -115,14 +115,7 @@ class TodoList {
   }
 
   findByTitle(title) {
-    let found = undefined;
-    this.forEach((todo) => {
-      if (todo.title === title) {
-        found = todo;
-      }
-    });
-
-    return found;
+    return this.filter((todo) => todo.getTitle() === title).first();
   }
 
   allDone() {
@@ -134,7 +127,8 @@ class TodoList {
   }
 
   markDone(title) {
-    this.findByTitle(title).markDone();
+    let todo = this.findByTitle(title);
+    if (todo !== undefined) todo.markDone();
   }
 
   markAllDone() {
@@ -173,4 +167,4 @@ list.add(todo6);
 todo1.markDone();
 todo5.markDone();
 
-console.log(list.toArray() === list.todos);
+list.markDone("horse");
