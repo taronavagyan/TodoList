@@ -104,7 +104,7 @@ class TodoList {
   }
 
   filter(callback) {
-    let filteredTodoList = new TodoList(`Filtered ${this.title}`);
+    let filteredTodoList = new TodoList(this.title);
     this.forEach((todo) => {
       if (callback(todo)) {
         filteredTodoList.add(todo);
@@ -123,6 +123,14 @@ class TodoList {
     });
 
     return found;
+  }
+
+  allDone() {
+    return this.filter((todo) => todo.isDone());
+  }
+
+  allNotDone() {
+    return this.filter((todo) => !todo.isDone());
   }
 
   _validateIndex(index) {
@@ -149,4 +157,5 @@ list.add(todo6);
 todo1.markDone();
 todo5.markDone();
 
-console.log(list.findByTitle("Buy a"));
+console.log(list.allDone());
+console.log(list.allNotDone());
